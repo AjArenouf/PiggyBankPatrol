@@ -152,6 +152,8 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
         /// <seealso cref="TrySpawnObject"/>
         public event Action<GameObject> objectSpawned;
 
+        bool m_ObjectSpawned = false;
+
         /// <summary>
         /// See <see cref="MonoBehaviour"/>.
         /// </summary>
@@ -192,6 +194,12 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
         /// <seealso cref="objectSpawned"/>
         public bool TrySpawnObject(Vector3 spawnPoint, Vector3 spawnNormal)
         {
+            if (m_ObjectSpawned)
+            {
+                Debug.Log("Object has spawned already");
+
+            }
+
             if (m_OnlySpawnInView)
             {
                 var inViewMin = m_ViewportPeriphery;
@@ -202,6 +210,9 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
                 {
                     return false;
                 }
+            }
+            if (m_ObjectSpawned) { 
+                Debug.Log("An object has already been spawned. No more will be spawned");
             }
 
             var objectIndex = isSpawnOptionRandomized ? Random.Range(0, m_ObjectPrefabs.Count) : m_SpawnOptionIndex;
@@ -230,7 +241,10 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
                 visualizationTrans.rotation = newObject.transform.rotation;
             }
 
+            m_ObjectSpawned = true;
+
             objectSpawned?.Invoke(newObject);
+            
             return true;
         }
     }
