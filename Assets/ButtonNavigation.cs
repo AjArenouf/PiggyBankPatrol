@@ -14,6 +14,16 @@ public class ButtonNavigation : MonoBehaviour
     public Button store;
     public Button social;
     public Button account;
+
+    public Button Happy;
+    public Button Sad;
+    public Button Depressed;
+
+    public int maxHealth = 100;
+    public int currentHealth;
+
+    public HappinessBar happinessBar;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +32,31 @@ public class ButtonNavigation : MonoBehaviour
         social.onClick.AddListener(OpenSocialCanvas);
         account.onClick.AddListener(OpenAccountCanvas);
 
+        Happy.onClick.AddListener(HappyButtonClicked);
+        Sad.onClick.AddListener(SadButtonClicked);
+        Depressed.onClick.AddListener(DepressedButtonClicked);
+
+        currentHealth = maxHealth;
+        happinessBar.SetMaxHealth(maxHealth);
+        happinessBar.SetHealth(currentHealth);
+    }
+
+    void HappyButtonClicked()
+    {
+        currentHealth = maxHealth;
+        happinessBar.SetHealth(currentHealth);
+    }
+
+    void SadButtonClicked()
+    {
+        currentHealth = Mathf.Max(currentHealth - 50, 0);
+        happinessBar.SetHealth(currentHealth);
+    }
+
+    void DepressedButtonClicked()
+    {
+        currentHealth = Mathf.Max(currentHealth - 75, 0);
+        happinessBar.SetHealth(currentHealth);
     }
 
     // Update is called once per frame
@@ -59,4 +94,10 @@ public class ButtonNavigation : MonoBehaviour
         socialCanvas.SetActive(false);
         accountCanvas.SetActive(true);
     }
+
+  /*  void TakeDamage(int damage)
+    {
+        currentHealth -= damage;
+        happinessBar.SetHealth(currentHealth);
+    }*/
 }
