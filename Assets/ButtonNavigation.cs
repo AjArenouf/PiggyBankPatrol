@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 public class ButtonNavigation : MonoBehaviour
 {
@@ -14,6 +15,7 @@ public class ButtonNavigation : MonoBehaviour
     public Button store;
     public Button social;
     public Button account;
+    public Button treat1;
 
     public Button Happy;
     public Button Sad;
@@ -21,6 +23,8 @@ public class ButtonNavigation : MonoBehaviour
 
     public int maxHealth = 100;
     public int currentHealth;
+
+    public TextMeshProUGUI inGameCurrency;
 
     public HappinessBar happinessBar;
 
@@ -36,13 +40,29 @@ public class ButtonNavigation : MonoBehaviour
         Sad.onClick.AddListener(SadButtonClicked);
         Depressed.onClick.AddListener(DepressedButtonClicked);
 
-        currentHealth = maxHealth;
+        currentHealth = 50;
         happinessBar.SetMaxHealth(maxHealth);
         happinessBar.SetHealth(currentHealth);
+
     }
 
     void HappyButtonClicked()
     {
+        // Convert the current currency value to an integer
+        int currentCurrencyValue = int.Parse(inGameCurrency.text.Replace(",", "")); // Remove commas if present
+
+        // Subtract a certain amount from the currency value
+        int newCurrencyValue = currentCurrencyValue - 85; // Subtract 85 (you can adjust this value)
+
+        // Ensure the currency value doesn't go below 0
+        newCurrencyValue = Mathf.Max(newCurrencyValue, 0);
+
+        // Convert the new currency value back to string format
+        string newCurrencyString = newCurrencyValue.ToString("N0"); // Format with commas
+
+        // Update the in-game currency text component
+        inGameCurrency.text = newCurrencyString;
+
         currentHealth = maxHealth;
         happinessBar.SetHealth(currentHealth);
     }
