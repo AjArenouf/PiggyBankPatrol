@@ -21,6 +21,12 @@ public class ButtonNavigation : MonoBehaviour
     public Button Sad;
     public Button Depressed;
 
+    public Button treats;
+    public Button accessories;
+
+    public GameObject bone;
+    public GameObject collar;
+
     public int maxHealth = 100;
     public int currentHealth;
 
@@ -39,6 +45,12 @@ public class ButtonNavigation : MonoBehaviour
         Happy.onClick.AddListener(HappyButtonClicked);
         Sad.onClick.AddListener(SadButtonClicked);
         Depressed.onClick.AddListener(DepressedButtonClicked);
+
+        treats.onClick.AddListener(HideAccessories);
+        accessories.onClick.AddListener(HideTreats);
+
+       /* bone.onClick.AddListener(GoHome);
+        collar.onClick.AddListener(GoHome1);*/
 
         currentHealth = 50;
         happinessBar.SetMaxHealth(maxHealth);
@@ -65,6 +77,8 @@ public class ButtonNavigation : MonoBehaviour
 
         currentHealth = maxHealth;
         happinessBar.SetHealth(currentHealth);
+
+        OpenHomeCanvas();
     }
 
     void SadButtonClicked()
@@ -119,5 +133,27 @@ public class ButtonNavigation : MonoBehaviour
     {
         currentHealth -= damage;
         happinessBar.SetHealth(currentHealth);
+    }*/
+
+    void HideAccessories()
+    {
+        bone.SetActive(true);
+        collar.SetActive(false);
+    }
+
+    void HideTreats()
+    {
+        collar.SetActive(true);
+        bone.SetActive(false);
+    }
+
+/*    void GoHome()
+    {
+        storeCanvas.SetActive(false);
+    }
+
+    void GoHome1()
+    {
+        storeCanvas.SetActive(false);
     }*/
 }
