@@ -211,9 +211,9 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
                     return false;
                 }
             }
-            if (m_ObjectSpawned) { 
+           /* if (m_ObjectSpawned) { 
                 Debug.Log("An object has already been spawned. No more will be spawned");
-            }
+            }*/
 
             var objectIndex = isSpawnOptionRandomized ? Random.Range(0, m_ObjectPrefabs.Count) : m_SpawnOptionIndex;
             var newObject = Instantiate(m_ObjectPrefabs[objectIndex]);
@@ -222,18 +222,20 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
 
             newObject.transform.position = spawnPoint;
             EnsureFacingCamera();
-                
+
             var facePosition = m_CameraToFace.transform.position;
+            /* var directionToCamera = (m_CameraToFace.transform.position - spawnPoint).normalized;
+             newObject.transform.rotation = Quaternion.LookRotation(directionToCamera, Vector3.up);*/
             var forward = facePosition - spawnPoint;
             BurstMathUtility.ProjectOnPlane(forward, spawnNormal, out var projectedForward);
             newObject.transform.rotation = Quaternion.LookRotation(projectedForward, spawnNormal);
 
-            if (m_ApplyRandomAngleAtSpawn)
+         /*   if (m_ApplyRandomAngleAtSpawn)
             {
                 var randomRotation = Random.Range(-m_SpawnAngleRange, m_SpawnAngleRange);
                 newObject.transform.Rotate(Vector3.up, randomRotation);
             }
-
+*/
             if (m_SpawnVisualizationPrefab != null)
             {
                 var visualizationTrans = Instantiate(m_SpawnVisualizationPrefab).transform;
