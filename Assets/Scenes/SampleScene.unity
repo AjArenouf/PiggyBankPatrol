@@ -4782,18 +4782,6 @@ RectTransform:
     type: 3}
   m_PrefabInstance: {fileID: 1987666080}
   m_PrefabAsset: {fileID: 0}
---- !u!114 &1025420519 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 5641653299101160283, guid: 3caeff871db70f14e9fe39d322aff2ff,
-    type: 3}
-  m_PrefabInstance: {fileID: 1987666080}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4e29b1a8efbd4b44bb3f3716e73f07ff, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1 &1044746809
 GameObject:
   m_ObjectHideFlags: 0
@@ -11064,8 +11052,8 @@ MonoBehaviour:
   social: {fileID: 900929664}
   account: {fileID: 748819447}
   treat1: {fileID: 0}
-  Happy: {fileID: 1260181236}
-  Sad: {fileID: 1025420519}
+  TreatBone: {fileID: 1260181236}
+  Collar: {fileID: 622135630}
   Depressed: {fileID: 1920027050}
   treats: {fileID: 1943993463}
   accessories: {fileID: 308816507}

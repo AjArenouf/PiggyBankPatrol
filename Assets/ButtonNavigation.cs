@@ -17,8 +17,8 @@ public class ButtonNavigation : MonoBehaviour
     public Button account;
     public Button treat1;
 
-    public Button Happy;
-    public Button Sad;
+    public Button TreatBone;
+    public Button Collar;
     public Button Depressed;
 
     public Button treats;
@@ -42,8 +42,8 @@ public class ButtonNavigation : MonoBehaviour
         social.onClick.AddListener(OpenSocialCanvas);
         account.onClick.AddListener(OpenAccountCanvas);
 
-        Happy.onClick.AddListener(HappyButtonClicked);
-        Sad.onClick.AddListener(SadButtonClicked);
+        TreatBone.onClick.AddListener(HappyButtonClicked);
+        Collar.onClick.AddListener(SadButtonClicked);
         Depressed.onClick.AddListener(DepressedButtonClicked);
 
         treats.onClick.AddListener(HideAccessories);
@@ -83,8 +83,24 @@ public class ButtonNavigation : MonoBehaviour
 
     void SadButtonClicked()
     {
+        // Convert the current currency value to an integer
+        int currentCurrencyValue = int.Parse(inGameCurrency.text.Replace(",", "")); // Remove commas if present
+
+        // Subtract a certain amount from the currency value
+        int newCurrencyValue = currentCurrencyValue - 85; // Subtract 85 (you can adjust this value)
+
+        // Ensure the currency value doesn't go below 0
+        newCurrencyValue = Mathf.Max(newCurrencyValue, 0);
+
+        // Convert the new currency value back to string format
+        string newCurrencyString = newCurrencyValue.ToString("N0"); // Format with commas
+
+        // Update the in-game currency text component
+        inGameCurrency.text = newCurrencyString;
         currentHealth = Mathf.Max(currentHealth - 50, 0);
         happinessBar.SetHealth(currentHealth);
+
+        OpenHomeCanvas();
     }
 
     void DepressedButtonClicked()
