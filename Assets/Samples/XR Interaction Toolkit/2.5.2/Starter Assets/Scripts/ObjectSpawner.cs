@@ -14,6 +14,7 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
         public Button collar2;
         public Button animationtest;
         public GameObject visibleButton;
+        public Button bone2;
 
         private Transform m_CurrentSpawnedObject;
         private Animator m_ObjectAnimator;
@@ -101,6 +102,7 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
             EnsureFacingCamera();
             collar2.onClick.AddListener(ToggleTorusVisibility);
             animationtest.onClick.AddListener(TriggerAnimation);
+            bone2.onClick.AddListener(PlayLoopingAnimation);
             visibleButton.SetActive(false);
         }
 
@@ -198,6 +200,28 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
                 if (m_ObjectAnimator != null)
                 {
                     m_ObjectAnimator.SetTrigger("ButtonPressed");
+                }
+                else
+                {
+                    Debug.LogWarning("Animator component not found on the instantiated object.");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("No object instantiated to trigger animation.");
+            }
+        }
+
+        public void PlayLoopingAnimation()
+        {
+            if (m_CurrentSpawnedObject != null)
+            {
+                m_ObjectAnimator = m_CurrentSpawnedObject.GetComponent<Animator>();
+
+                if (m_ObjectAnimator != null)
+                {
+                    // Assuming you have another trigger called "TreatGiven" in your animation controller
+                    m_ObjectAnimator.SetTrigger("TreatGiven");
                 }
                 else
                 {

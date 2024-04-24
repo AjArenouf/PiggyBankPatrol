@@ -1940,6 +1940,7 @@ MonoBehaviour:
   collar2: {fileID: 622135630}
   animationtest: {fileID: 708059495}
   visibleButton: {fileID: 708059493}
+  bone2: {fileID: 1260181236}
   m_ObjectPrefabs:
   - {fileID: 7266252081785242410, guid: d49298c84063ad142a94d5e47c20d9a5, type: 3}
   m_SpawnVisualizationPrefab: {fileID: 0}
