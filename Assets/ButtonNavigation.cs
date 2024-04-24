@@ -10,6 +10,7 @@ public class ButtonNavigation : MonoBehaviour
     public GameObject storeCanvas;
     public GameObject socialCanvas;
     public GameObject accountCanvas;
+    public GameObject torus;
 
     public Button home;
     public Button store;
@@ -55,6 +56,7 @@ public class ButtonNavigation : MonoBehaviour
         currentHealth = 50;
         happinessBar.SetMaxHealth(maxHealth);
         happinessBar.SetHealth(currentHealth);
+        torus.SetActive(false);
 
     }
 
@@ -97,10 +99,16 @@ public class ButtonNavigation : MonoBehaviour
 
         // Update the in-game currency text component
         inGameCurrency.text = newCurrencyString;
-        currentHealth = Mathf.Max(currentHealth - 50, 0);
-        happinessBar.SetHealth(currentHealth);
+      /*  currentHealth = Mathf.Max(currentHealth - 50, 0);
+        happinessBar.SetHealth(currentHealth);*/
 
         OpenHomeCanvas();
+
+        if (!torus.activeInHierarchy)
+        {
+            torus.SetActive(true);
+            Debug.Log("registered");
+        }
     }
 
     void DepressedButtonClicked()
@@ -163,7 +171,7 @@ public class ButtonNavigation : MonoBehaviour
         bone.SetActive(false);
     }
 
-/*    void GoHome()
+    void GoHome()
     {
         storeCanvas.SetActive(false);
     }
@@ -171,5 +179,5 @@ public class ButtonNavigation : MonoBehaviour
     void GoHome1()
     {
         storeCanvas.SetActive(false);
-    }*/
+    }
 }

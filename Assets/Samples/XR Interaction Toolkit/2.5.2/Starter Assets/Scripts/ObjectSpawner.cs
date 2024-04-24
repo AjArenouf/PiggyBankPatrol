@@ -1,38 +1,25 @@
 using System;
 using System.Collections.Generic;
 using UnityEngine.XR.Interaction.Toolkit.Utilities;
+using UnityEngine.UI;
+
+
 
 namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
 {
-    /// <summary>
-    /// Behavior with an API for spawning objects from a given set of prefabs.
-    /// </summary>
     public class ObjectSpawner : MonoBehaviour
     {
         [SerializeField]
-        [Tooltip("The camera that objects will face when spawned. If not set, defaults to the main camera.")]
         Camera m_CameraToFace;
+        public GameObject Collar;
+        public Button collar2;
+       
 
-        /// <summary>
-        /// The camera that objects will face when spawned. If not set, defaults to the <see cref="Camera.main"/> camera.
-        /// </summary>
-        public Camera cameraToFace
-        {
-            get
-            {
-                EnsureFacingCamera();
-                return m_CameraToFace;
-            }
-            set => m_CameraToFace = value;
-        }
+        private Transform m_CurrentSpawnedObject; // Store reference to the currently spawned object
 
         [SerializeField]
-        [Tooltip("The list of prefabs available to spawn.")]
         List<GameObject> m_ObjectPrefabs = new List<GameObject>();
 
-        /// <summary>
-        /// The list of prefabs available to spawn.
-        /// </summary>
         public List<GameObject> objectPrefabs
         {
             get => m_ObjectPrefabs;
@@ -40,14 +27,8 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
         }
 
         [SerializeField]
-        [Tooltip("Optional prefab to spawn for each spawned object. Use a prefab with the Destroy Self component to make " +
-            "sure the visualization only lives temporarily.")]
         GameObject m_SpawnVisualizationPrefab;
 
-        /// <summary>
-        /// Optional prefab to spawn for each spawned object.
-        /// </summary>
-        /// <remarks>Use a prefab with <see cref="DestroySelf"/> to make sure the visualization only lives temporarily.</remarks>
         public GameObject spawnVisualizationPrefab
         {
             get => m_SpawnVisualizationPrefab;
@@ -55,35 +36,19 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
         }
 
         [SerializeField]
-        [Tooltip("The index of the prefab to spawn. If outside the range of the list, this behavior will select " +
-            "a random object each time it spawns.")]
         int m_SpawnOptionIndex = -1;
 
-        /// <summary>
-        /// The index of the prefab to spawn. If outside the range of <see cref="objectPrefabs"/>, this behavior will
-        /// select a random object each time it spawns.
-        /// </summary>
-        /// <seealso cref="isSpawnOptionRandomized"/>
         public int spawnOptionIndex
         {
             get => m_SpawnOptionIndex;
             set => m_SpawnOptionIndex = value;
         }
 
-        /// <summary>
-        /// Whether this behavior will select a random object from <see cref="objectPrefabs"/> each time it spawns.
-        /// </summary>
-        /// <seealso cref="spawnOptionIndex"/>
-        /// <seealso cref="RandomizeSpawnOption"/>
         public bool isSpawnOptionRandomized => m_SpawnOptionIndex < 0 || m_SpawnOptionIndex >= m_ObjectPrefabs.Count;
 
         [SerializeField]
-        [Tooltip("Whether to only spawn an object if the spawn point is within view of the camera.")]
         bool m_OnlySpawnInView = true;
 
-        /// <summary>
-        /// Whether to only spawn an object if the spawn point is within view of the <see cref="cameraToFace"/>.
-        /// </summary>
         public bool onlySpawnInView
         {
             get => m_OnlySpawnInView;
@@ -91,12 +56,8 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
         }
 
         [SerializeField]
-        [Tooltip("The size, in viewport units, of the periphery inside the viewport that will not be considered in view.")]
         float m_ViewportPeriphery = 0.15f;
 
-        /// <summary>
-        /// The size, in viewport units, of the periphery inside the viewport that will not be considered in view.
-        /// </summary>
         public float viewportPeriphery
         {
             get => m_ViewportPeriphery;
@@ -104,14 +65,8 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
         }
 
         [SerializeField]
-        [Tooltip("When enabled, the object will be rotated about the y-axis when spawned by Spawn Angle Range, " +
-            "in relation to the direction of the spawn point to the camera.")]
         bool m_ApplyRandomAngleAtSpawn = true;
 
-        /// <summary>
-        /// When enabled, the object will be rotated about the y-axis when spawned by <see cref="spawnAngleRange"/>
-        /// in relation to the direction of the spawn point to the camera.
-        /// </summary>
         public bool applyRandomAngleAtSpawn
         {
             get => m_ApplyRandomAngleAtSpawn;
@@ -119,14 +74,8 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
         }
 
         [SerializeField]
-        [Tooltip("The range in degrees that the object will randomly be rotated about the y axis when spawned, " +
-            "in relation to the direction of the spawn point to the camera.")]
         float m_SpawnAngleRange = 45f;
 
-        /// <summary>
-        /// The range in degrees that the object will randomly be rotated about the y axis when spawned, in relation
-        /// to the direction of the spawn point to the camera.
-        /// </summary>
         public float spawnAngleRange
         {
             get => m_SpawnAngleRange;
@@ -134,32 +83,23 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
         }
 
         [SerializeField]
-        [Tooltip("Whether to spawn each object as a child of this object.")]
         bool m_SpawnAsChildren;
 
-        /// <summary>
-        /// Whether to spawn each object as a child of this object.
-        /// </summary>
         public bool spawnAsChildren
         {
             get => m_SpawnAsChildren;
             set => m_SpawnAsChildren = value;
         }
 
-        /// <summary>
-        /// Event invoked after an object is spawned.
-        /// </summary>
-        /// <seealso cref="TrySpawnObject"/>
         public event Action<GameObject> objectSpawned;
 
         bool m_ObjectSpawned = false;
 
-        /// <summary>
-        /// See <see cref="MonoBehaviour"/>.
-        /// </summary>
         void Awake()
         {
             EnsureFacingCamera();
+            // Bind the ToggleTorusVisibility method to the button click event
+            collar2.onClick.AddListener(ToggleTorusVisibility);
         }
 
         void EnsureFacingCamera()
@@ -168,55 +108,48 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
                 m_CameraToFace = Camera.main;
         }
 
-        /// <summary>
-        /// Sets this behavior to select a random object from <see cref="objectPrefabs"/> each time it spawns.
-        /// </summary>
-        /// <seealso cref="spawnOptionIndex"/>
-        /// <seealso cref="isSpawnOptionRandomized"/>
         public void RandomizeSpawnOption()
         {
             m_SpawnOptionIndex = -1;
         }
 
-        /// <summary>
-        /// Attempts to spawn an object from <see cref="objectPrefabs"/> at the given position. The object will have a
-        /// yaw rotation that faces <see cref="cameraToFace"/>, plus or minus a random angle within <see cref="spawnAngleRange"/>.
-        /// </summary>
-        /// <param name="spawnPoint">The world space position at which to spawn the object.</param>
-        /// <param name="spawnNormal">The world space normal of the spawn surface.</param>
-        /// <returns>Returns <see langword="true"/> if the spawner successfully spawned an object. Otherwise returns
-        /// <see langword="false"/>, for instance if the spawn point is out of view of the camera.</returns>
-        /// <remarks>
-        /// The object selected to spawn is based on <see cref="spawnOptionIndex"/>. If the index is outside
-        /// the range of <see cref="objectPrefabs"/>, this method will select a random prefab from the list to spawn.
-        /// Otherwise, it will spawn the prefab at the index.
-        /// </remarks>
-        /// <seealso cref="objectSpawned"/>
         public bool TrySpawnObject(Vector3 spawnPoint, Vector3 spawnNormal)
         {
             if (m_ObjectSpawned)
             {
                 Debug.Log("Object has spawned already");
-
             }
 
             if (m_OnlySpawnInView)
             {
                 var inViewMin = m_ViewportPeriphery;
                 var inViewMax = 1f - m_ViewportPeriphery;
-                var pointInViewportSpace = cameraToFace.WorldToViewportPoint(spawnPoint);
+                var pointInViewportSpace = m_CameraToFace.WorldToViewportPoint(spawnPoint);
                 if (pointInViewportSpace.z < 0f || pointInViewportSpace.x > inViewMax || pointInViewportSpace.x < inViewMin ||
                     pointInViewportSpace.y > inViewMax || pointInViewportSpace.y < inViewMin)
                 {
                     return false;
                 }
             }
-           /* if (m_ObjectSpawned) { 
-                Debug.Log("An object has already been spawned. No more will be spawned");
-            }*/
 
-            var objectIndex = isSpawnOptionRandomized ? Random.Range(0, m_ObjectPrefabs.Count) : m_SpawnOptionIndex;
+            Transform childTransform = null;
+
+            var objectIndex = isSpawnOptionRandomized ? UnityEngine.Random.Range(0, m_ObjectPrefabs.Count) : m_SpawnOptionIndex;
             var newObject = Instantiate(m_ObjectPrefabs[objectIndex]);
+
+            if (newObject != null)
+            {
+                // Find the child object by name
+                childTransform = newObject.transform.Find("Torus");
+
+                // Check if the child object was found
+                if (childTransform != null)
+                {
+                    // Set the child object to inactive
+                    childTransform.gameObject.SetActive(false);
+                }
+            }
+
             if (m_SpawnAsChildren)
                 newObject.transform.parent = transform;
 
@@ -224,18 +157,10 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
             EnsureFacingCamera();
 
             var facePosition = m_CameraToFace.transform.position;
-            /* var directionToCamera = (m_CameraToFace.transform.position - spawnPoint).normalized;
-             newObject.transform.rotation = Quaternion.LookRotation(directionToCamera, Vector3.up);*/
             var forward = facePosition - spawnPoint;
             BurstMathUtility.ProjectOnPlane(forward, spawnNormal, out var projectedForward);
             newObject.transform.rotation = Quaternion.LookRotation(projectedForward, spawnNormal);
 
-         /*   if (m_ApplyRandomAngleAtSpawn)
-            {
-                var randomRotation = Random.Range(-m_SpawnAngleRange, m_SpawnAngleRange);
-                newObject.transform.Rotate(Vector3.up, randomRotation);
-            }
-*/
             if (m_SpawnVisualizationPrefab != null)
             {
                 var visualizationTrans = Instantiate(m_SpawnVisualizationPrefab).transform;
@@ -244,10 +169,32 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
             }
 
             m_ObjectSpawned = true;
+            m_CurrentSpawnedObject = newObject.transform;
 
             objectSpawned?.Invoke(newObject);
-            
+
             return true;
+        }
+
+        public void ToggleTorusVisibility()
+        {
+            if (m_CurrentSpawnedObject != null)
+            {
+                Transform childTransform = m_CurrentSpawnedObject.Find("Torus");
+                if (childTransform != null)
+                {
+                    // Toggle the visibility of the torus child object
+                    childTransform.gameObject.SetActive(!childTransform.gameObject.activeSelf);
+                }
+            }
+        }
+
+        public void ShowCollar()
+        {
+            if (Collar != null)
+            {
+                Collar.SetActive(true);
+            }
         }
     }
 }
