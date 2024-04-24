@@ -1,9 +1,8 @@
-using System;
-using System.Collections.Generic;
-using UnityEngine.XR.Interaction.Toolkit.Utilities;
+using UnityEngine;
 using UnityEngine.UI;
-
-
+using System;
+using UnityEngine.XR.Interaction.Toolkit.Utilities;
+using System.Collections.Generic;
 
 namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
 {
@@ -13,9 +12,11 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
         Camera m_CameraToFace;
         public GameObject Collar;
         public Button collar2;
-       
+        public Button animationtest;
+        public GameObject visibleButton;
 
-        private Transform m_CurrentSpawnedObject; // Store reference to the currently spawned object
+        private Transform m_CurrentSpawnedObject;
+        private Animator m_ObjectAnimator;
 
         [SerializeField]
         List<GameObject> m_ObjectPrefabs = new List<GameObject>();
@@ -98,8 +99,9 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
         void Awake()
         {
             EnsureFacingCamera();
-            // Bind the ToggleTorusVisibility method to the button click event
             collar2.onClick.AddListener(ToggleTorusVisibility);
+            animationtest.onClick.AddListener(TriggerAnimation);
+            visibleButton.SetActive(false);
         }
 
         void EnsureFacingCamera()
@@ -139,13 +141,10 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
 
             if (newObject != null)
             {
-                // Find the child object by name
                 childTransform = newObject.transform.Find("Torus");
 
-                // Check if the child object was found
                 if (childTransform != null)
                 {
-                    // Set the child object to inactive
                     childTransform.gameObject.SetActive(false);
                 }
             }
@@ -173,6 +172,8 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
 
             objectSpawned?.Invoke(newObject);
 
+            visibleButton.SetActive(true);
+
             return true;
         }
 
@@ -183,9 +184,29 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
                 Transform childTransform = m_CurrentSpawnedObject.Find("Torus");
                 if (childTransform != null)
                 {
-                    // Toggle the visibility of the torus child object
                     childTransform.gameObject.SetActive(!childTransform.gameObject.activeSelf);
                 }
+            }
+        }
+
+        public void TriggerAnimation()
+        {
+            if (m_CurrentSpawnedObject != null)
+            {
+                m_ObjectAnimator = m_CurrentSpawnedObject.GetComponent<Animator>();
+
+                if (m_ObjectAnimator != null)
+                {
+                    m_ObjectAnimator.SetTrigger("ButtonPressed");
+                }
+                else
+                {
+                    Debug.LogWarning("Animator component not found on the instantiated object.");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("No object instantiated to trigger animation.");
             }
         }
 
