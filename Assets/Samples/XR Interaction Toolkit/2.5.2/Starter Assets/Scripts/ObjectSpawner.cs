@@ -4,6 +4,7 @@ using System;
 using UnityEngine.XR.Interaction.Toolkit.Utilities;
 using System.Collections.Generic;
 
+
 namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
 {
     public class ObjectSpawner : MonoBehaviour
@@ -15,6 +16,7 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
         public Button animationtest;
         public GameObject visibleButton;
         public Button bone2;
+
 
         private Transform m_CurrentSpawnedObject;
         private Animator m_ObjectAnimator;
@@ -175,6 +177,7 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
             objectSpawned?.Invoke(newObject);
 
             visibleButton.SetActive(true);
+
 
             return true;
         }
