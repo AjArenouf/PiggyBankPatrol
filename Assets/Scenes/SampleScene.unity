@@ -6308,7 +6308,8 @@ MonoBehaviour:
   imageWithStrings: {fileID: 1164521271}
   textComponent: {fileID: 876602338}
   displayDuration: 3
-  treatbutton: {fileID: 1260181236}
+  treatButton: {fileID: 0}
+  clothesButton: {fileID: 622135630}
 --- !u!114 &1164521271
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -9,7 +9,8 @@ public class RandomString : MonoBehaviour
     public SelfAffirmStrings imageWithStrings;
     public TextMeshProUGUI textComponent;
     public float displayDuration = 3f;
-    public Button treatbutton; // Reference to the treat button in the Unity Editor
+    public Button treatButton;
+    public Button clothesButton;
 
     private Coroutine displayCoroutine;
     private bool showingButtonString = false;
@@ -18,6 +19,12 @@ public class RandomString : MonoBehaviour
     private string[] buttonStrings = {
         "You're the reason my treat jar is always full!",
         "Every penny saved means I get closer to that yummy chew toy!"
+    };
+
+    private string[] clothesButtonStrings =
+    {
+        "My wardrobe thanks you for being so smart with money.",
+        "Maybe those fancy sunglasses I've been eyeing are finally in my future!"
     };
 
     // Start is called before the first frame update
@@ -33,13 +40,23 @@ public class RandomString : MonoBehaviour
         displayCoroutine = StartCoroutine(DisplayStrings());
 
         // Listen for the treat button click event
-        if (treatbutton != null)
+        if (treatButton != null)
         {
-            treatbutton.onClick.AddListener(OnTreatButtonClicked);
+            treatButton.onClick.AddListener(OnTreatButtonClicked);
         }
         else
         {
             Debug.LogError("Treat button reference is not assigned in the RandomString script.");
+        }
+
+        // Listen for the clothes button click event
+        if (clothesButton != null)
+        {
+            clothesButton.onClick.AddListener(OnClothesButtonClicked);
+        }
+        else
+        {
+            Debug.LogError("Clothes button reference is not assigned in the RandomString script.");
         }
     }
 
@@ -47,7 +64,14 @@ public class RandomString : MonoBehaviour
     {
         // Display one of the specified strings when the treat button is clicked
         int randomIndex = Random.Range(0, buttonStrings.Length);
-        DisplayButtonString(randomIndex);
+        DisplayButtonString(buttonStrings[randomIndex]);
+    }
+
+    void OnClothesButtonClicked()
+    {
+        // Display a random clothes string when the clothes button is clicked
+        int randomIndex = Random.Range(0, clothesButtonStrings.Length);
+        DisplayButtonString(clothesButtonStrings[randomIndex]);
     }
 
     IEnumerator DisplayStrings()
@@ -78,20 +102,17 @@ public class RandomString : MonoBehaviour
     }
 
     // Method to be called when the button is pressed
-    public void DisplayButtonString(int index)
+    public void DisplayButtonString(string str)
     {
-        if (index >= 0 && index < buttonStrings.Length)
-        {
-            // Display the specified string when the button is pressed
-            textComponent.text = buttonStrings[index];
+        // Display the specified string
+        textComponent.text = str;
 
-            // Show the text
-            textComponent.enabled = true;
-            showingButtonString = true;
+        // Show the text
+        textComponent.enabled = true;
+        showingButtonString = true;
 
-            // Hide the text and image after a delay
-            StartCoroutine(HideButtonStringAfterDelay(displayDuration));
-        }
+        // Hide the text and image after a delay
+        StartCoroutine(HideButtonStringAfterDelay(displayDuration));
     }
 
     // Coroutine to hide the button string after a delay
