@@ -2225,7 +2225,7 @@ MonoBehaviour:
   visibleButton: {fileID: 708059493}
   bone2: {fileID: 1260181236}
   m_ObjectPrefabs:
-  - {fileID: 7266252081785242410, guid: d49298c84063ad142a94d5e47c20d9a5, type: 3}
+  - {fileID: 4605148863520347861, guid: b03334a77e189bd48a17808bdcad2936, type: 3}
   m_SpawnVisualizationPrefab: {fileID: 0}
   m_SpawnOptionIndex: 0
   m_OnlySpawnInView: 1
