@@ -1444,6 +1444,7 @@ GameObject:
   - component: {fileID: 363333671}
   - component: {fileID: 363333675}
   - component: {fileID: 363333676}
+  - component: {fileID: 363333677}
   m_Layer: 5
   m_Name: Home
   m_TagString: Untagged
@@ -1586,6 +1587,19 @@ MonoBehaviour:
   m_PlaneManager: {fileID: 0}
   m_DebugMenu: {fileID: 0}
   m_DebugMenuSlider: {fileID: 0}
+--- !u!114 &363333677
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 363333670}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ed6d582099fdf449997a31765572a6d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  newSelfAffirmation: {fileID: 1164521265}
 --- !u!1 &373337366
 GameObject:
   m_ObjectHideFlags: 0
@@ -6201,7 +6215,6 @@ GameObject:
   - component: {fileID: 1164521268}
   - component: {fileID: 1164521267}
   - component: {fileID: 1164521266}
-  - component: {fileID: 1164521271}
   - component: {fileID: 1164521270}
   m_Layer: 5
   m_Name: SelfAffimation
@@ -6305,32 +6318,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b043c3210b2ed0249b50c8799096ea05, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  imageWithStrings: {fileID: 1164521271}
+  imageComponent: {fileID: 1705608321}
   textComponent: {fileID: 876602338}
   displayDuration: 3
-  treatButton: {fileID: 0}
+  vanishDuration: 8
+  treatButton: {fileID: 1260181236}
   clothesButton: {fileID: 622135630}
---- !u!114 &1164521271
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1164521265}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12b32ffa2f8491049a21e8d4d4bde4d0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  stringList:
-  - More money saved means more treats for me! You're the best!
-  - ' Purrfect! Saving money means a bigger scratching post!  '
-  - ' You''re my favorite human, especially when you reach your savings goals! '
-  - Saving like that deserves a big belly rub!
-  - "You're the best at resisting those chew toys... I mean, resisting spending!
-    \U0001F609"
-  - Thanks for being so smart! Maybe I'll get an extra treat today!
-  imageComponent: {fileID: 1705608321}
 --- !u!1 &1172193305 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 8870816845572969784, guid: f0fc783115bd99842b9416e227b92339,
@@ -13133,6 +13126,7 @@ MonoBehaviour:
   socialCanvas: {fileID: 1241383682}
   accountCanvas: {fileID: 834739024}
   torus: {fileID: 0}
+  selfAffirmation: {fileID: 1164521265}
   home: {fileID: 850610360}
   store: {fileID: 1209923197}
   social: {fileID: 900929664}
@@ -13149,6 +13143,7 @@ MonoBehaviour:
   currentHealth: 0
   inGameCurrency: {fileID: 265047696}
   happinessBar: {fileID: 2039755864}
+  randomString: {fileID: 1164521270}
 --- !u!1 &2049730727
 GameObject:
   m_ObjectHideFlags: 0

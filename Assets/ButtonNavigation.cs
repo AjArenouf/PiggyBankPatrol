@@ -11,6 +11,7 @@ public class ButtonNavigation : MonoBehaviour
     public GameObject socialCanvas;
     public GameObject accountCanvas;
     public GameObject torus;
+    public GameObject selfAffirmation;
 
     public Button home;
     public Button store;
@@ -35,6 +36,8 @@ public class ButtonNavigation : MonoBehaviour
 
     public HappinessBar happinessBar;
 
+    public RandomString randomString;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -57,6 +60,8 @@ public class ButtonNavigation : MonoBehaviour
         happinessBar.SetMaxHealth(maxHealth);
         happinessBar.SetHealth(currentHealth);
         torus.SetActive(false);
+
+        //displayCoroutine = StartCoroutine(DisplayStrings());
 
     }
 
@@ -125,6 +130,7 @@ public class ButtonNavigation : MonoBehaviour
     void OpenHomeCanvas()
     {
         homeCanvas.SetActive(true);
+        selfAffirmation.SetActive(true);
         storeCanvas.SetActive(false);
         socialCanvas.SetActive(false);
         accountCanvas.SetActive(false);
