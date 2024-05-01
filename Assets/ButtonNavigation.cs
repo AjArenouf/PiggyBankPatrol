@@ -146,7 +146,7 @@ public class ButtonNavigation : MonoBehaviour
     }
     void OpenStoreCanvas()
     {
-        homeCanvas.SetActive(false);
+        homeCanvas.SetActive(true);
         storeCanvas.SetActive(true);
         socialCanvas.SetActive(false);
         accountCanvas.SetActive(false);
