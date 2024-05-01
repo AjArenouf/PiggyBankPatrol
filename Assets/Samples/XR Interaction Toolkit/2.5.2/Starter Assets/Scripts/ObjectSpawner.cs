@@ -16,6 +16,9 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
         public Button animationtest;
         public GameObject visibleButton;
         public Button bone2;
+        public Button sitAnimation;
+        public GameObject storeCanvas;
+        public GameObject homeCanvas;
 
 
         private Transform m_CurrentSpawnedObject;
@@ -106,6 +109,7 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
             animationtest.onClick.AddListener(TriggerAnimation);
             bone2.onClick.AddListener(PlayLoopingAnimation);
             visibleButton.SetActive(false);
+            sitAnimation.onClick.AddListener(SitAnimation);
         }
 
         void EnsureFacingCamera()
@@ -234,6 +238,21 @@ namespace UnityEngine.XR.Interaction.Toolkit.Samples.StarterAssets
             else
             {
                 Debug.LogWarning("No object instantiated to trigger animation.");
+            }
+        }
+
+        public void SitAnimation()
+        {
+            if (m_CurrentSpawnedObject != null)
+            {
+                m_ObjectAnimator = m_CurrentSpawnedObject.GetComponent<Animator>();
+
+                if (m_ObjectAnimator != null)
+                {
+                    m_ObjectAnimator.SetTrigger("DownBoy");
+                    storeCanvas.SetActive(false);
+                    homeCanvas.SetActive(true);
+                }
             }
         }
 

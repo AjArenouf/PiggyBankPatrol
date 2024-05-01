@@ -369,7 +369,7 @@ GameObject:
   - component: {fileID: 135577743}
   - component: {fileID: 135577742}
   m_Layer: 5
-  m_Name: Button
+  m_Name: BuyNow
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -2760,10 +2760,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   m_CameraToFace: {fileID: 1701956672}
   Collar: {fileID: 0}
-  collar2: {fileID: 622135630}
+  collar2: {fileID: 1576457948}
   animationtest: {fileID: 708059495}
   visibleButton: {fileID: 708059493}
-  bone2: {fileID: 1260181236}
+  bone2: {fileID: 394649569}
+  sitAnimation: {fileID: 135577742}
+  storeCanvas: {fileID: 1264046365}
+  homeCanvas: {fileID: 363333670}
   m_ObjectPrefabs:
   - {fileID: 4605148863520347861, guid: b03334a77e189bd48a17808bdcad2936, type: 3}
   m_SpawnVisualizationPrefab: {fileID: 0}
@@ -2971,7 +2974,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &459480123
 RectTransform:
   m_ObjectHideFlags: 0
@@ -3729,7 +3732,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &531265927
 RectTransform:
   m_ObjectHideFlags: 0
@@ -10133,7 +10136,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1264046366
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -16130,11 +16133,17 @@ MonoBehaviour:
   social: {fileID: 900929664}
   account: {fileID: 748819447}
   treat1: {fileID: 0}
-  TreatBone: {fileID: 1260181236}
-  Collar: {fileID: 622135630}
+  TreatBone: {fileID: 394649569}
+  Collar: {fileID: 1576457948}
   Depressed: {fileID: 1920027050}
   treats: {fileID: 1943993463}
   accessories: {fileID: 308816507}
+  tricks: {fileID: 1068234861}
+  backgrounds: {fileID: 807123999}
+  accessoriesList: {fileID: 1034891774}
+  treatsList: {fileID: 459480122}
+  tricksList: {fileID: 531265926}
+  backgroundList: {fileID: 1094969659}
   bone: {fileID: 1260181234}
   collar: {fileID: 622135628}
   maxHealth: 100

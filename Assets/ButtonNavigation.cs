@@ -25,6 +25,13 @@ public class ButtonNavigation : MonoBehaviour
 
     public Button treats;
     public Button accessories;
+    public Button tricks;
+    public Button backgrounds;
+
+    public GameObject accessoriesList;
+    public GameObject treatsList;
+    public GameObject tricksList;
+    public GameObject backgroundList;
 
     public GameObject bone;
     public GameObject collar;
@@ -50,8 +57,10 @@ public class ButtonNavigation : MonoBehaviour
         Collar.onClick.AddListener(SadButtonClicked);
         Depressed.onClick.AddListener(DepressedButtonClicked);
 
-        treats.onClick.AddListener(HideAccessories);
-        accessories.onClick.AddListener(HideTreats);
+        treats.onClick.AddListener(HideOtherPages0);
+        accessories.onClick.AddListener(HideOtherPages1);
+        tricks.onClick.AddListener(HideOtherPages2);
+        backgrounds.onClick.AddListener(HideOtherPages3);
 
        /* bone.onClick.AddListener(GoHome);
         collar.onClick.AddListener(GoHome1);*/
@@ -165,11 +174,38 @@ public class ButtonNavigation : MonoBehaviour
         happinessBar.SetHealth(currentHealth);
     }*/
 
-    void HideAccessories()
+    void HideOtherPages0()
     {
-        bone.SetActive(true);
-        collar.SetActive(false);
+        treatsList.SetActive(true);
+        accessoriesList.SetActive(false);
+        tricksList.SetActive(false);
+        backgroundList.SetActive(false);
     }
+
+    void HideOtherPages1()
+    {
+        treatsList.SetActive(false);
+        accessoriesList.SetActive(true);
+        tricksList.SetActive(false);
+        backgroundList.SetActive(false);
+    }
+
+    void HideOtherPages2()
+    {
+        treatsList.SetActive(false);
+        accessoriesList.SetActive(false);
+        tricksList.SetActive(true);
+        backgroundList.SetActive(false);
+    }
+
+    void HideOtherPages3()
+    {
+        treatsList.SetActive(false);
+        accessoriesList.SetActive(false);
+        tricksList.SetActive(false);
+        backgroundList.SetActive(true);
+    }
+
 
     void HideTreats()
     {
